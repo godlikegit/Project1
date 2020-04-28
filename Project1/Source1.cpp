@@ -1,41 +1,13 @@
 #include "inc.h"
-//struct Uses23GB
-//{
-//unsigned char m_buffer[11'184'800]{0};
-//} s_hurtsMem;
+#include "common.h"
 
-struct KillsPC
+void test1()
 {
-    unsigned char m_buffer[22'369'616]{ 0 };
-} s_killsPC;
+    randArray();
 
-struct a {};
-struct b {
-    explicit b(a* const& child) {}
-};
-struct c : a {
-    c(std::initializer_list<b*>&& children) {}
-};
+    if (!checkArray(arr)) cout << "not soted!" << endl;
+    SelectionSort();
+    cout << (checkArray(arr) ? "soted!" : "not soted!");
 
-void test()
-{
-    //b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new c({
-    //new b(new a())
-    //}))
-    //}))
-    //}))
-    //}))
-    //}))
-    //}))
-    //}))
-    //}))
-    //    }));
+    printArray(arr);
 }

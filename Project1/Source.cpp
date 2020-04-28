@@ -1,9 +1,15 @@
+#include "inc.h"
+#include "common.h"
 
-extern void fun2();
-extern void fun3();
+extern void test1();
+extern void test2();
+extern void test3();
+extern void test4();
+
+
 
 int main() {
 
-    fun2();
+    test4();
     return 0;
 }

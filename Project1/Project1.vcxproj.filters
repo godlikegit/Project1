@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\sort_mathod">
+      <UniqueIdentifier>{3cdfac51-7380-476c-9551-f107d62acaa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -27,12 +30,27 @@
     <ClCompile Include="Source3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rand_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectSort.cpp">
+      <Filter>Source Files\sort_mathod</Filter>
+    </ClCompile>
+    <ClCompile Include="RadixSort.cpp">
+      <Filter>Source Files\sort_mathod</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

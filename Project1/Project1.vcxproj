@@ -123,12 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="RadixSort.cpp" />
+    <ClCompile Include="rand_test.cpp" />
+    <ClCompile Include="SelectSort.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="Source2.cpp" />
     <ClCompile Include="Source3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common.h" />
     <ClInclude Include="inc.h" />
     <ClInclude Include="random.hpp" />
   </ItemGroup>
