@@ -5,48 +5,83 @@ class Rank
 {
     struct Node
     {
-        Node() {}
-        Node(int _score, int _id)
-            : score(_score), id(_id) {}
-
         int score = 0;
         int id = 0;
         Node* pre = nullptr;
         Node* next = nullptr;
     };
-    Node head;
     unordered_map<int, Node*> m;
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    vector<Node> nodes;
+    int used_size = 0;
 
+public:
+    Rank() {}
+
+    // ?
+    Rank(int n) {
+        head = new Node;
+        tail = new Node;
+        nodes.resize(n);
+    }
+
+    Node* createNode(int score, int id) {
+        if (nodes.size() == used_size) {
+            return tail;
+        }
+        Node* node = &nodes[used_size++];
+        node->score = score;
+        node->id = id;
+        return node;
+    }
 public:
     void insert(int score, int id)
     {
-        if (nullptr == head.next) {
-            head.next = new Node(score, id);
-            head.next->pre = &head;
+        if (nullptr == head->next) {
+            Node* c = createNode(score, id);
+            if (nullptr == c) return;
 
-            m.insert({ id, head.next });
+            head->next = c;
+            head->next->pre = head;
+
+            m.insert({ id, head->next });
             return;
         }
         
+        //不在榜里
         if (m.find(id) == m.end())
         {
-            Node* p = new Node(score, id);
-            Node* c = head.next;
-            if (score > c->score) {
-                //c往前插
-                c->pre->next = p;
-                p->pre = c->pre;
-                c->pre = p;
-                p->next = c;
-            }
-            else {
-                while (c->next && score < c->next->score) {
-                    c = c->next;
+            Node* p = createNode(score, id);
+            //榜满员了，将吊车尾取代，然后向前挪
+            if (tail == p) {
+                p = tail->pre;
+                if (p->score > score) {
+                    return;
                 }
-                if (nullptr != c->next) c->next->pre = p;
-                p->next = c->next;
-                c->next = p;
-                p->pre = c;
+                p->score = score;
+                p->id = id;
+                //todo
+            }
+            else
+            {
+                Node* c = head->next;
+                if (score > c->score) {
+                    //c往前插
+                    c->pre->next = p;
+                    p->pre = c->pre;
+                    c->pre = p;
+                    p->next = c;
+                }
+                else {
+                    while (c->next && score < c->next->score) {
+                        c = c->next;
+                    }
+                    if (nullptr != c->next) c->next->pre = p;
+                    p->next = c->next;
+                    c->next = p;
+                    p->pre = c;
+                }
             }
           
             m.insert({ id, p });
@@ -73,7 +108,7 @@ public:
         }
         else if (score > p->score) {
             Node* c = p;
-            while (&head != c->pre && score > c->score) {
+            while (head != c->pre && score > c->score) {
                 c = c->pre;
             }
             if (c == p) {
@@ -93,7 +128,7 @@ public:
 
     void print()
     {
-        Node* p = head.next;
+        Node* p = head->next;
         while (nullptr != p)
         {
             printf("%d, %d\n", p->score, p->id);
@@ -101,11 +136,12 @@ public:
         }
         printf("\n");
     }
+
 };
 
 int main() {
 
-    Rank r;
+    Rank r(10);
     r.insert(8, 1);
     r.insert(2, 2);
     r.insert(5, 3);
