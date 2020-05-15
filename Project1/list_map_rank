@@ -1,0 +1,120 @@
+#include "inc.h"
+
+
+class Rank
+{
+    struct Node
+    {
+        Node() {}
+        Node(int _score, int _id)
+            : score(_score), id(_id) {}
+
+        int score = 0;
+        int id = 0;
+        Node* pre = nullptr;
+        Node* next = nullptr;
+    };
+    Node head;
+    unordered_map<int, Node*> m;
+
+public:
+    void insert(int score, int id)
+    {
+        if (nullptr == head.next) {
+            head.next = new Node(score, id);
+            head.next->pre = &head;
+
+            m.insert({ id, head.next });
+            return;
+        }
+        
+        if (m.find(id) == m.end())
+        {
+            Node* p = new Node(score, id);
+            Node* c = head.next;
+            if (score > c->score) {
+                //c往前插
+                c->pre->next = p;
+                p->pre = c->pre;
+                c->pre = p;
+                p->next = c;
+            }
+            else {
+                while (c->next && score < c->next->score) {
+                    c = c->next;
+                }
+                if (nullptr != c->next) c->next->pre = p;
+                p->next = c->next;
+                c->next = p;
+                p->pre = c;
+            }
+          
+            m.insert({ id, p });
+            return;
+        }
+
+        Node* p = m[id];
+        if (score < p->score) {
+            Node* c = p;
+            while (nullptr != c->next && score < c->next->score) {
+                c = c->next;
+            }
+            if (c == p) {
+                p->score = score;
+            }
+            else {
+                p->pre->next = p->next;
+                if (nullptr != p->next) p->next->pre = p->pre;
+                c->pre->next = p;
+                p->pre = c->pre;
+                c->pre = p;
+                p->next = c;
+            }
+        }
+        else if (score > p->score) {
+            Node* c = p;
+            while (&head != c->pre && score > c->score) {
+                c = c->pre;
+            }
+            if (c == p) {
+                p->score = score;
+            }
+            else {
+                p->pre->next = p->next;
+                if (nullptr != p->next) p->next->pre = p->pre;
+
+                if (nullptr != c->next) c->next->pre = p;
+                p->next = c->next;
+                c->pre->next = p;
+                p->pre = c->pre;
+            }
+        }
+    }
+
+    void print()
+    {
+        Node* p = head.next;
+        while (nullptr != p)
+        {
+            printf("%d, %d\n", p->score, p->id);
+            p = p->next;
+        }
+        printf("\n");
+    }
+};
+
+int main() {
+
+    Rank r;
+    r.insert(8, 1);
+    r.insert(2, 2);
+    r.insert(5, 3);
+    r.insert(9, 4);
+    r.insert(3, 5);
+    r.print();
+
+    r.insert(6, 5);
+    r.print();
+
+    return 0;
+}
