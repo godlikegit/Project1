@@ -156,11 +156,31 @@ struct Rank {
 	}
 };
 
+struct TreeNode {
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode(int x=0) : val(x), left(nullptr), right(nullptr) {}
+};
+bool isLeaf(TreeNode* node) {
+	return node->left == nullptr
+		&& node->right == nullptr;
+}
+int minDepth(TreeNode* root) {
+	if (nullptr == root) return 0;
+	if (isLeaf(root)) return 1;
+	int left_dep = minDepth(root->left);
+	int right_dep = minDepth(root->right);
+	return 1 + (left_dep < right_dep ? left_dep : right_dep);
+}
 
 int main() {
 
-	Rank r;
-	r.test();
-  
+	TreeNode a(1);
+	TreeNode b(2);
+	a.left = &b;
+	int d = minDepth(&a);
     return 0;
 }
+//最少步数的方法: [n/2个2 + n%2个1]
+//最大步数的方法: [0个2 + n个1]

@@ -55,23 +55,3 @@ void swap(int* p, int i, int j)
     //p[j] ^= p[i];
     //p[i] ^= p[j];
 }
-
-
-StopWatch::StopWatch()
-{
-    auto now = std::chrono::high_resolution_clock::now();
-    m_start = std::chrono::time_point_cast<std::chrono::milliseconds>(now).time_since_epoch().count();
-}
-
-void StopWatch::Reset()
-{
-    auto now = std::chrono::high_resolution_clock::now();
-    m_start = std::chrono::time_point_cast<std::chrono::milliseconds>(now).time_since_epoch().count();
-}
-
-uint64_t StopWatch::Elapsed()
-{
-    auto now = std::chrono::high_resolution_clock::now();
-    auto end = std::chrono::time_point_cast<std::chrono::milliseconds>(now).time_since_epoch().count();
-    return end - m_start;
-}
